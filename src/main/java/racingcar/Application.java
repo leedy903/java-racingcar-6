@@ -9,49 +9,68 @@ import java.util.List;
 import java.util.Random;
 
 public class Application {
+    private static List<Car> cars;
     public static void main(String[] args) {
         // TODO: 프로그램 구현
 
-        String userInputCarNames = Console.readLine();
+        String userInputCarNames = userInput();
         List<String> carNames = Arrays.stream(userInputCarNames.split(",")).toList();
-        List<Integer> carDrivingDistance = new ArrayList<Integer>();
-        for(int i = 0; i < carNames.size(); i++) {
-            carDrivingDistance.add(0);
+
+        cars = new ArrayList<Car>();
+        for (String carName: carNames) {
+            Car car = new Car(carName);
+            cars.add(car);
         }
 
-        int userInputNumberOfAttempts = Integer.parseInt(Console.readLine());
+        int userInputNumberOfAttempts = Integer.parseInt(userInput());
 
         for (int i = 0; i < userInputNumberOfAttempts; i++) {
-            for (int j = 0; j < carNames.size(); j++) {
-                int randomNumber = Randoms.pickNumberInRange(0, 9);
-                if (randomNumber >= 4) {
-                    carDrivingDistance.set(j, carDrivingDistance.get(j) + 1);
-                }
+            goForwardRandomCar();
+            showRaceResult();
+        }
+
+        showFinalWinners();
+
+        Console.close();
+    }
+
+    private static String userInput() {
+        String userInput = Console.readLine();
+        return userInput;
+    }
+
+    private static void goForwardRandomCar() {
+        for (int i = 0; i < cars.size(); i++) {
+            int randomNumber = Randoms.pickNumberInRange(0, 9);
+            System.out.println(i + cars.get(i).getName() + randomNumber);
+            if (randomNumber >= 4) {
+                cars.get(i).goForward();
             }
-            for (int j = 0; j < carNames.size(); j++) {
-                StringBuilder result = new StringBuilder();
-                String carName = carNames.get(j);
-                String carDistanceExpression = "";
+        }
+    }
 
-                for (int k = 0; k < carDrivingDistance.get(j); k++) {
-                    carDistanceExpression += "-";
-                }
+    private static void showRaceResult() {
+        for (int i = 0; i < cars.size(); i++) {
+            cars.get(i).showResult();
+        }
+    }
 
-                result.append(carName).append(" : ").append(carDistanceExpression);
-                System.out.println(result);
+    private static void showFinalWinners() {
+        List<String> winners = new ArrayList<String>();
+
+        int maxDistance = 0;
+
+        for(int i = 0; i < cars.size(); i++) {
+            maxDistance = Math.max(maxDistance, cars.get(i).getDrivingDistance());
+        }
+
+        for (int i = 0; i < cars.size(); i++) {
+            if (maxDistance == cars.get(i).getDrivingDistance()) {
+                winners.add(cars.get(i).getName());
             }
         }
 
-        StringBuilder winners = new StringBuilder();
-        Integer maxDistance = Collections.max(carDrivingDistance);
-        for (int i = 0; i < carDrivingDistance.size(); i++) {
-            if (maxDistance == carDrivingDistance.get(i)) {
-                if (winners.length() != 0) {
-                    winners.append(", ");
-                }
-                winners.append(carNames.get(i));
-            }
-        }
-        System.out.println("최종 우승자 : " + winners);
+        String result = String.join(", ", winners);
+        System.out.println("최종 우승자 : " + result);
     }
 }
