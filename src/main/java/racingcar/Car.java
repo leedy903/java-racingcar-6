@@ -8,6 +8,7 @@ public class Car {
     private Integer drivingDistance = 0;
 
     public Car(String name) {
+        validateName(name);
         this.name = name;
     }
 
@@ -17,6 +18,24 @@ public class Car {
 
     public Integer getDrivingDistance() {
         return drivingDistance;
+    }
+
+    private void validateName(String name) {
+        validateNameInComma(name);
+        validateNameLength(name);
+    }
+
+    private void validateNameInComma(String name) {
+        if (name.contains(",")) {
+            throw new IllegalArgumentException("Name cannot contains ',' character");
+        }
+    }
+
+    private void validateNameLength(String name) {
+        if (name.length() == 0 || name.length() > 5) {
+            throw new IllegalArgumentException("Name length should be longer than no more than 5 characters");
+
+        }
     }
 
     public void goForward() {

@@ -35,12 +35,33 @@ public class Game {
     private void initRounds() {
         System.out.println("시도할 회수는 몇회인가요?");
         rounds = Integer.parseInt(userInput());
+        validateRounds(rounds);
     }
-
 
     private String userInput() {
         String userInput = Console.readLine();
+        validateUserInput(userInput);
         return userInput;
+    }
+
+    private void validateUserInput(String input) {
+        validateUserInputNullCheck(input);
+    }
+
+    private void validateUserInputNullCheck(String input) {
+        if (input == null) {
+            throw new IllegalArgumentException("Input cannot be null");
+        }
+    }
+
+    private void validateRounds(int rounds) {
+        validateRoundsRange(rounds);
+    }
+
+    private void validateRoundsRange(int rounds) {
+        if (rounds < 0 || rounds > Integer.MAX_VALUE) {
+            throw new IllegalArgumentException("Invalid rounds Range");
+        }
     }
 
     private void playRace() {
