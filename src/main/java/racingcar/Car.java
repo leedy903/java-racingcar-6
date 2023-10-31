@@ -6,6 +6,7 @@ public class Car {
 
     private String name;
     private Integer drivingDistance = 0;
+    private final int MAX_LENGTH = 5;
 
     public Car(String name) {
         validateName(name);
@@ -32,8 +33,8 @@ public class Car {
     }
 
     private void validateNameLength(String name) {
-        if (name.length() == 0 || name.length() > 5) {
-            throw new IllegalArgumentException("Name length should be longer than no more than 5 characters");
+        if (name.length() == 0 || name.length() > MAX_LENGTH) {
+            throw new IllegalArgumentException("Name length should be longer than 0 and no more than " + MAX_LENGTH + "characters");
 
         }
     }
