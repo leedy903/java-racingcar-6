@@ -7,12 +7,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Game {
-    private User user;
     private List<Car> cars;
     private int rounds;
 
     public Game() {
-        user = new User();
         cars = new ArrayList<Car>();
         rounds = 0;
     }
@@ -30,21 +28,54 @@ public class Game {
 
     private void initCars() {
         System.out.println("경주할 자동차 이름을 입력하세요.(이름은 쉼표(,) 기준으로 구분)");
-        String carNamesByUserInput = user.getCarNames();
+        String carNamesByUserInput = Console.readLine();
+        validateCarNamesByUserInput(carNamesByUserInput);
         carNamesParser(carNamesByUserInput);
     }
 
     private void carNamesParser(String carNamesByUserInput) {
         List<String> carNames = Arrays.stream(carNamesByUserInput.split(",")).toList();
+        validateCarNames(carNames);
         for (String name: carNames) {
             Car car = new Car(name);
             cars.add(car);
         }
     }
 
+    private void validateCarNamesByUserInput(String carNamesByUserInput) {
+        validateCarNamesByUserInputEndsWithComma(carNamesByUserInput);
+    }
+
+    private void validateCarNamesByUserInputEndsWithComma(String carNamesByUserInput) {
+        if (carNamesByUserInput.charAt(carNamesByUserInput.length() - 1) == ',') {
+            throw new IllegalArgumentException("Car names cannot end with comma");
+        }
+    }
+
+
+    private void validateCarNames(List<String> carNames) {
+        validateCarNamesEmptyCarNames(carNames);
+    }
+
+    private void validateCarNamesEmptyCarNames(List<String> carNames) {
+        if (carNames.size() == 0) {
+            throw new IllegalArgumentException("Invalid comma in car names");
+        }
+    }
+
+
     private void initRounds() {
         System.out.println("시도할 회수는 몇회인가요?");
-        rounds = user.getRounds();
+        String roundsByUserInput = Console.readLine();
+        initRoundsByUserInput(roundsByUserInput);
+    }
+
+    private void initRoundsByUserInput(String roundsByUserInput) {
+        try {
+            rounds = Integer.parseInt(roundsByUserInput);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Rounds should be number");
+        }
         validateRounds(rounds);
     }
 

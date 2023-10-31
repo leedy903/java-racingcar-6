@@ -20,20 +20,12 @@ public class Car {
     }
 
     private void validateName(String name) {
-        validateNameInComma(name);
         validateNameLength(name);
     }
 
-    private void validateNameInComma(String name) {
-        if (name.contains(",")) {
-            throw new IllegalArgumentException("Name cannot contains ',' character");
-        }
-    }
-
     private void validateNameLength(String name) {
-        if (name.length() == 0 || name.length() > MAX_LENGTH) {
+        if (name == null || name.length() == 0 || name.length() > MAX_LENGTH) {
             throw new IllegalArgumentException("Name length should be longer than 0 and no more than " + MAX_LENGTH + "characters");
-
         }
     }
 
@@ -49,5 +41,4 @@ public class Car {
         }
         System.out.println(result);
     }
-
 }
