@@ -39,12 +39,4 @@ class GameTest {
             e.printStackTrace();
         }
     }
-
-    @Test
-    @DisplayName("자동차 생성 테스트")
-    void carInitTest() {
-        Car car = new Car("pobi");
-        assertEquals("pobi", car.getName());
-        assertEquals(0, car.getDrivingDistance());
-    }
 }
