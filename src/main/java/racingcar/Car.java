@@ -1,7 +1,5 @@
 package racingcar;
 
-import camp.nextstep.edu.missionutils.Randoms;
-
 public class Car {
 
     private String name;
@@ -39,7 +37,7 @@ public class Car {
         }
     }
 
-    public void goForward() {
+    public void moveForward() {
         drivingDistance += 1;
     }
 

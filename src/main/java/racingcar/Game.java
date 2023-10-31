@@ -75,7 +75,7 @@ public class Game {
         for (int i = 0; i < cars.size(); i++) {
             int randomNumber = Randoms.pickNumberInRange(0, 9);
             if (randomNumber >= 4) {
-                cars.get(i).goForward();
+                cars.get(i).moveForward();
             }
         }
     }
