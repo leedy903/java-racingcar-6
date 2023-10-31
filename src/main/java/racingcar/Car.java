@@ -1,13 +1,13 @@
 package racingcar;
 
-import camp.nextstep.edu.missionutils.Randoms;
-
 public class Car {
 
     private String name;
     private Integer drivingDistance = 0;
+    private final int MAX_LENGTH = 5;
 
     public Car(String name) {
+        validateName(name);
         this.name = name;
     }
 
@@ -19,7 +19,17 @@ public class Car {
         return drivingDistance;
     }
 
-    public void goForward() {
+    private void validateName(String name) {
+        validateNameLength(name);
+    }
+
+    private void validateNameLength(String name) {
+        if (name == null || name.length() == 0 || name.length() > MAX_LENGTH) {
+            throw new IllegalArgumentException("Name length should be longer than 0 and no more than " + MAX_LENGTH + "characters");
+        }
+    }
+
+    public void moveForward() {
         drivingDistance += 1;
     }
 
@@ -31,5 +41,4 @@ public class Car {
         }
         System.out.println(result);
     }
-
 }
