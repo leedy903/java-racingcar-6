@@ -25,6 +25,18 @@ class ApplicationTest extends NsTest {
     }
 
     @Test
+    @DisplayName("중복된 자동차 이름")
+    void duplicateCarName() {
+        assertRandomNumberInRangeTest(
+                () -> {
+                    run("pobi,pobi", "1");
+                    assertThat(output()).contains("pobi : -", "pobi : -", "최종 우승자 : pobi, pobi");
+                },
+                MOVING_FORWARD, MOVING_FORWARD
+        );
+    }
+
+    @Test
     @DisplayName("자동차 이름이 6자 이상인 경우")
     void 이름에_대한_예외_처리() {
         assertSimpleTest(() ->
